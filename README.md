@@ -10,7 +10,44 @@
 | `photoreal-garment-plate` | 一张含服装的人物图 | 9:16 竖版 | 无五官白色哑光塑料假人全身穿着的服装照提示词，真实面料、真实裁缝、可制作 |
 | `character-asset-sheet` | 头像图 + 服装图（也可一张图兼任） | 3:2 横版 | 三栏人物资产表：左 1/3 正面大头照、中 1/3 无头全身正面、右 1/3 无头全身背面 |
 
-## 一键安装（只需一条命令）
+---
+
+## 方式一：离线安装包（推荐，无需翻墙、无需联网）
+
+把本组合包整个发给别人，对方**解压后双击即可自动安装**，不依赖 GitHub。
+
+### Windows（双击安装）
+
+1. 把压缩包**完整解压**到任意文件夹（不要直接在压缩包窗口里运行）。
+2. 进入解压后的文件夹，双击运行：
+
+   **`双击安装-Windows.bat`**
+
+3. 看到“完成：成功安装 3 个技能”后，**完全退出并重新打开豆包（或新开会话）**即可。
+
+特点：
+- 自动定位豆包 `.user_skills` 目录，无需手动找路径。
+- 已存在的同名技能会自动备份为 `技能名.bak.时间戳` 再装新版，可回退；重复安装无副作用。
+- 全程不联网，可在内网、离线机器上使用。
+
+### macOS / Linux
+
+1. 解压后打开终端，进入解压目录。
+2. 运行：
+
+   ```bash
+   bash install-offline.sh
+   ```
+
+3. 重新打开豆包（或新开会话）。
+
+> 详细图文步骤见包内 `安装说明-先看我.txt`。
+
+---
+
+## 方式二：GitHub 在线安装（需要可访问 GitHub）
+
+仓库地址：`https://github.com/zh13293895107-creator/doubao-character-asset-skills`
 
 ### Windows（PowerShell）
 
@@ -18,14 +55,10 @@
 irm https://raw.githubusercontent.com/zh13293895107-creator/doubao-character-asset-skills/main/install.ps1 | iex
 ```
 
-脚本会自动定位 Doubao 的 `.user_skills` 目录，下载并安装全部三个技能；已存在的同名技能默认跳过，升级时加 `-Force`（自动备份旧版为 `.bak.时间戳`）：
+升级（覆盖并自动备份）：
 
 ```powershell
-# 升级（覆盖并自动备份）
 & ([scriptblock]::Create((irm https://raw.githubusercontent.com/zh13293895107-creator/doubao-character-asset-skills/main/install.ps1))) -Force
-
-# 自定义安装目录
-& ([scriptblock]::Create((irm https://raw.githubusercontent.com/zh13293895107-creator/doubao-character-asset-skills/main/install.ps1))) -TargetDir "D:\my-skills"
 ```
 
 ### macOS / Linux（bash）
@@ -34,15 +67,14 @@ irm https://raw.githubusercontent.com/zh13293895107-creator/doubao-character-ass
 curl -fsSL https://raw.githubusercontent.com/zh13293895107-creator/doubao-character-asset-skills/main/install.sh | bash
 ```
 
-安装完成后**重启或新开一个 Doubao 会话**，技能即被识别。
+### 手动安装（任何系统）
 
-### 手动安装
+下载 ZIP：`https://github.com/zh13293895107-creator/doubao-character-asset-skills/archive/refs/heads/main.zip`，解压后把 `skills/` 下的三个文件夹复制到豆包用户技能目录：
 
-1. 下载本仓库 ZIP：`https://github.com/zh13293895107-creator/doubao-character-asset-skills/archive/refs/heads/main.zip`
-2. 解压后把 `skills/` 下的三个文件夹复制到 Doubao 用户技能目录：
-   - Windows：`%USERPROFILE%\AppData\Local\Doubao\User Data\Default\.doubao\agent_mode\workspace\.user_skills\`
-   - macOS：`~/Library/Application Support/Doubao/User Data/Default/.doubao/agent_mode/workspace/.user_skills/`（或 `~/.doubao/agent_mode/workspace/.user_skills/`）
-3. 重启会话。
+- Windows：`%USERPROFILE%\AppData\Local\Doubao\User Data\Default\.doubao\agent_mode\workspace\.user_skills\`
+- macOS：`~/Library/Application Support/Doubao/User Data/Default/.doubao/agent_mode/workspace/.user_skills/`（或 `~/.doubao/agent_mode/workspace/.user_skills/`）
+
+---
 
 ## 单独使用
 
@@ -78,8 +110,12 @@ curl -fsSL https://raw.githubusercontent.com/zh13293895107-creator/doubao-charac
 ```
 doubao-character-asset-skills/
 ├── README.md                      # 本文件
-├── install.ps1                    # Windows 一键安装脚本
-├── install.sh                     # macOS / Linux 一键安装脚本
+├── 安装说明-先看我.txt            # 离线安装简明说明
+├── 双击安装-Windows.bat           # Windows 双击离线安装（推荐）
+├── install-offline.ps1            # Windows 离线安装脚本（bat 调用，也可单独运行）
+├── install-offline.sh             # macOS / Linux 离线安装脚本
+├── install.ps1                    # Windows 在线安装脚本（GitHub）
+├── install.sh                     # macOS / Linux 在线安装脚本（GitHub）
 └── skills/
     ├── photoreal-face-plate/
     │   ├── SKILL.md
@@ -94,7 +130,8 @@ doubao-character-asset-skills/
 
 ## 升级与卸载
 
-- 升级：重跑安装命令并加 `-Force`（Windows）或直接重跑 bash 脚本（自动备份旧版）。
+- 离线升级：拿到新版组合包，重新解压双击 `双击安装-Windows.bat`（旧版自动备份）。
+- 在线升级：重跑在线命令并加 `-Force`（Windows）或重跑 bash 脚本。
 - 卸载：删除 `.user_skills/` 下对应的三个技能文件夹即可。
 
 ## 许可
